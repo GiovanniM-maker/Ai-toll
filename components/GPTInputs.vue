@@ -5,41 +5,29 @@
   
       <div v-if="gpt === 'generico'">
     <label>
-      <span class="label-input">Nome:</span>
-      <input v-model="inputs.nome" type="text" placeholder="Inserisci il tuo nome" />
+      <span class="label-input">Azienda:</span>
+      <select class="select-style" v-model="inputs.azienda">
+        <option class="option" disabled value="">-- Seleziona un'opzione --</option>
+        <option class="option" value="opzione1">Hippocrates Holding</option>
+        <option class="option" value="opzione2">TopFarmacia</option>
+      </select>
     </label>
     <label>
-      <span class="label-input">Cognome:</span>
-      <input v-model="inputs.cognome" type="text" placeholder="Inserisci il tuo cognome" />
+      <span class="label-input">Job Title o Attività da Svolgere:</span>
+      <input v-model="inputs.jobtitle" type="text" placeholder="Inserisci il tuo cognome" />
     </label>
     <label>
-      <span class="label-input">Età:</span>
-      <input v-model="inputs.eta" type="number" placeholder="Inserisci la tua età" />
-    </label>
-    <label>
-      <span class="label-input">Email:</span>
-      <input v-model="inputs.email" type="email" placeholder="Inserisci la tua email" />
+      <span class="label-input">Soft Skill:</span>
+      <input v-model="inputs.softskill" type="text" placeholder="Inserisci la tua età" />
     </label>
   </div>
   
   
       <div v-else-if="gpt === 'speciale'">
-        <label>
-          Reparto:
-          <input v-model="inputs.reparto" type="text" placeholder="Inserisci il tuo reparto" />
-        </label>
-        <label>
-          Progetto:
-          <input v-model="inputs.progetto" type="text" placeholder="Inserisci il tuo progetto" />
-        </label>
-        <label>
-          Ruolo:
-          <input v-model="inputs.ruolo" type="text" placeholder="Inserisci il tuo ruolo" />
-        </label>
-        <label>
-          Genere:
-          <input v-model="inputs.genere" type="text" placeholder="maschio/femmina" />
-        </label>
+        
+    <!-- Altri contenuti della pagina -->
+    <FileUploadMapping />
+    <!-- Altri contenuti della pagina -->
       </div>
   
       <div v-else>
@@ -91,6 +79,7 @@
   <script setup lang="ts">
   import { computed } from 'vue'
   import { useConversationStore } from '@/stores/conversationStore'
+  import FileUploadMapping from '@/components/FileUploadMapping.vue'
   
   // Definizione delle proprietà attese dal componente
   interface Props {
@@ -113,6 +102,38 @@
   
   
   <style scoped>
+
+.select-style {
+  width: 100%; /* Larghezza piena del contenitore */
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Bordo sottile e visibile */
+    outline: none;
+    padding: 10px 20px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    border-radius: 9999px;
+    color: #fff;
+    box-shadow: inset 2px 5px 10px rgba(5, 5, 5, 0.7);
+    transition: border 0.3s ease;
+    margin: 0px 0px 20px;
+}
+
+.select-style:hover {
+  background-color: #444;
+}
+
+/* Stile al focus */
+.select-style:focus {
+  border: 1px solid #fff; /* Cambia colore del bordo al focus */
+}
+
+/* Stile quando il select è disabilitato */
+.select-style:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
   .card {
     background: transparent;
     border: transparent;

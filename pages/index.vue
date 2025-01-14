@@ -17,7 +17,7 @@
         <ul>
           <li>
             <a href="#" @click.prevent="selectGPT('generico')" :class="{ active: selectedGPT === 'generico' }">
-              GPT Generico
+              Job Description generator
             </a>
           </li>
           <li>
@@ -172,6 +172,7 @@
   import { useConversationStore } from '~/stores/conversationStore'
   import { useUIStore } from '~/stores/uiStore'
   import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
+  import GenerazioneJobDescription from '~/assets/prompts/GenerazioneJobDescription.txt?raw'
   
   // src/index.js
   
@@ -258,7 +259,10 @@
   
   function buildSystemMessage(gpt: string, inputs: Record<string, string>): string {
     if (gpt === 'generico') {
-      return `Raccontami i dati: Nome=${inputs.nome}, Cognome=${inputs.cognome}, Età=${inputs.eta}, Email=${inputs.email}`
+     return GenerazioneJobDescription
+      .replace('{azienda}', inputs.azienda || '')
+      .replace('{job-title}', inputs.jobtitle || '')
+      .replace('{soft-skill}', inputs.softskill || '')
     } else if (gpt === 'speciale') {
       return `Raccontami i dati: Reparto=${inputs.reparto}, Progetto=${inputs.progetto}, Ruolo=${inputs.ruolo}, Genere=${inputs.genere}`
     } else if (gpt === 'altro') {

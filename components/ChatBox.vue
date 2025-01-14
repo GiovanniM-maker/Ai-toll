@@ -206,7 +206,10 @@
     try {
       const res = await $fetch('/api/ask', {
         method: 'POST',
-        body: { messages: payloadMessages }
+        body: {
+        messages: payloadMessages,
+        gptType: props.gpt
+      }
       })
       conversationStore.addMessageToGpt(props.gpt, 'assistant', res.answer)
     } catch (error) {
@@ -355,9 +358,9 @@
   .chat-messages {
   overflow-y: auto;
   display: flex;
-  height: calc(100vh - 250px - 20px);
-  width: 100%;
-  margin-top: 20px;
+  height: calc(100vh - 270px - 20px);
+  width: 95vh;
+  margin-top: 10px;
   flex-direction: column;
   gap: 0.5rem;
   padding-right: 10px; /* Spazio per la scrollbar */
