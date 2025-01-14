@@ -26,17 +26,16 @@
   </template>
   
   <script setup lang="ts">
-  import { ref, reactive } from 'vue'
+  import { ref, reactive, watch } from 'vue'
   import Papa from 'papaparse'
   import * as XLSX from 'xlsx'
+  import { useFileStore } from '@/stores/fileStore'
+  
+  const fileStore = useFileStore()
   
   const showMappingModal = ref(false)
   const fileColumns = ref<string[]>([])
-  
-  // Campi fissi da mappare
   const requiredFields = ['email', 'nome', 'cognome']
-  
-  // Oggetto per conservare la mappatura: campo -> colonna selezionata
   const fieldMappings = reactive<Record<string, string>>({})
   requiredFields.forEach(field => { fieldMappings[field] = '' })
   
@@ -44,15 +43,16 @@
     const input = event.target as HTMLInputElement
     if (!input.files || input.files.length === 0) return
     const file = input.files[0]
+    fileStore.setUploadedFile(file)
     const extension = file.name.split('.').pop()?.toLowerCase()
   
     if (extension === 'csv') {
-      // Gestione per file CSV con PapaParse
       Papa.parse(file, {
         header: true,
         complete: (results) => {
           if (results.meta && results.meta.fields) {
             fileColumns.value = results.meta.fields as string[]
+            fileStore.setFileColumns(fileColumns.value)
             showMappingModal.value = true
           } else {
             alert('Non è stato possibile leggere le intestazioni del file.')
@@ -63,7 +63,6 @@
         }
       })
     } else if (extension === 'xls' || extension === 'xlsx') {
-      // Gestione per file Excel con SheetJS
       const reader = new FileReader()
       reader.onload = (e) => {
         try {
@@ -71,12 +70,21 @@
           const workbook = XLSX.read(data, { type: 'array' })
           const sheetName = workbook.SheetNames[0]
           const worksheet = workbook.Sheets[sheetName]
-          const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 })
-          if (jsonData && jsonData.length > 0) {
-            fileColumns.value = jsonData[0] as string[]
+  
+          const range = XLSX.utils.decode_range(worksheet['!ref']!)
+          const firstRow = range.s.r
+          const columns: string[] = []
+          for (let C = range.s.c; C <= range.e.c; ++C) {
+            const cellRef = XLSX.utils.encode_cell({ r: firstRow, c: C })
+            const cell = worksheet[cellRef]
+            columns.push(cell ? String(cell.v) : `Colonna ${C + 1}`)
+          }
+          if (columns.length > 0) {
+            fileColumns.value = columns
+            fileStore.setFileColumns(columns)
             showMappingModal.value = true
           } else {
-            alert('Il file Excel non contiene dati.')
+            alert('Il file Excel non contiene intestazioni valide.')
           }
         } catch (error) {
           console.error('Errore nella lettura del file Excel:', error)
@@ -97,14 +105,23 @@
       alert('Completa la mappatura per tutti i campi.')
       return
     }
+    fileStore.setFieldMappings({ ...fieldMappings })
+    fileStore.confirmMapping()
     showMappingModal.value = false
     console.log('Mappatura confermata:', fieldMappings)
-    // Continua con l'elaborazione, e.g., elaborazione dati secondo mappature
+    // L'elaborazione non parte qui
   }
   
   function closeModal() {
     showMappingModal.value = false
   }
+  
+  // Watcher per riaprire il popup se la mappatura viene resettata
+  watch(() => fileStore.mappingConfirmed, (newVal) => {
+    if (!newVal && fileStore.uploadedFile) {
+      showMappingModal.value = true
+    }
+  })
   </script>
   
   <style scoped>

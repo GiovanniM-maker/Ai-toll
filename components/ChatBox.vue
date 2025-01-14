@@ -30,7 +30,7 @@
               </div>
               <!-- Contenuto della risposta con pulsante copia -->
               <div class="assistant-response">
-                <p class="assistant-text shadow">{{ msg.content }}</p>
+                <p class="assistant-text shadow" v-html="msg.content"></p>
                 
   <button class="copy"
   @click="copyMessage(msg.content)"
