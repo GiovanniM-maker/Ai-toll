@@ -1,0 +1,419 @@
+/* assets/styles.css */
+
+/* Definizione delle variabili CSS */
+:root {
+    /* Variabili Primarie */
+    --primary: #a8c7fa;
+    --primary-variant: #4285f4;
+    --accent: #ffddb7;
+    --warn: #ea4335;
+  
+    /* Variabili di Testo */
+    --text-primary: #eef0ff;
+    --text-secondary: #c3c6d6;
+    --text-emphasis: #eef0ff;
+    --text-deemphasis: #c3c6d6;
+  
+    /* Variabili di Sfondo */
+    --background: #303030;
+    --surface: #1f1f1f;
+    --surface-container: #2c303d;
+    --surface-container-high: #3a3f50;
+    --surface-container-low: #242832;
+  
+    /* Variabili di Bordi e Ombre */
+    --divider: #424654;
+    --outline: #424654;
+    --shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),
+              0px 1px 1px 0px rgba(0,0,0,0.14),
+              0px 1px 3px 0px rgba(0,0,0,0.12);
+  
+  
+    /* Altre Variabili */
+    --border-radius: 15px;
+    --border-radius-chat: 80px;
+    --transition-speed: 0.3s ease;
+  
+    /* Variabili Aggiuntive */
+    --scrim: rgba(0,0,0,0.6);
+    --scrollbar-track: #1f1f1f;
+    --scrollbar-thumb-background: rgba(255,255,255,0.2);
+  }
+  
+  @font-face {
+    font-family: 'Google Sans';
+    src: url('@/assets/fonts/fonts.woff') format('woff'),
+         url('@/assets/fonts/fonts.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Google Sans';
+    src: url('@/assets/fonts/fonts.woff') format('woff'),
+         url('@/assets/fonts/fonts.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Google Sans';
+    src: url('@/assets/fonts/fonts.woff') format('woff'),
+         url('@/assets/fonts/fonts.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  /* Reset base */
+  
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  html {
+    font-size: 100%;
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: 'Google Sans', sans-serif;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background: var(--background);
+  }
+  
+  /* Tipografia */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: var(--font-weight-bold);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    color: var(--text-primary);
+  }
+  
+  p {
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+  }
+  
+  a {
+    color: var(--primary);
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Layout Utility */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .grid {
+    display: grid;
+    gap: 1rem;
+  }
+  
+  /* Navbar */
+  .navbar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--divider);
+    padding: 1rem 0;
+  }
+  
+  .brand {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+  }
+  
+  .nav-list {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .nav-list li a {
+    font-weight: var(--font-weight-normal);
+    color: var(--text-primary);
+  }
+  
+  .nav-list li a:hover {
+    color: var(--primary-variant);
+  }
+  
+  /* Footer */
+  .footer {
+    background: var(--divider);
+    color: var(--text-secondary);
+    padding: 1rem 0;
+    text-align: center;
+  }
+  
+  .footer-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+  
+  .footer-links a {
+    color: #bbb; /* Puoi sostituirlo con una variabile se necessario */
+    font-size: 0.875rem;
+  }
+  
+  .footer-links a:hover {
+    color: var(--text-primary);
+  }
+  
+  /* Pulsanti */
+  button, .btn {
+    background: var(--primary);
+    color: var(--text-primary);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: var(--font-size-base);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background var(--transition-speed);
+  }
+  
+  button:hover, .btn:hover {
+    background: var(--primary-variant);
+  }
+  
+  .cta {
+    font-weight: var(--font-weight-bold);
+  }
+  
+  /* Sezioni */
+  section {
+    padding: 2rem 0;
+  }
+  
+  .hero {
+    background: var(--surface);
+    text-align: center;
+  }
+  
+  .hero h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+  }
+  
+  .features h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+  }
+  
+  .features p {
+    font-size: var(--font-size-base);
+    color: var(--text-secondary);
+  }
+  
+  /* Responsività */
+  @media (max-width: 768px) {
+    .flex {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .nav-list {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .hero h2 {
+      font-size: 1.5rem;
+    }
+  }
+  
+  .chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: var(--v2-chat-background, rgba(31,31,31,0.5));
+    backdrop-filter: var(--v2-chat-blur, blur(60px));
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+  
+  .no-messages {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    text-align: center;
+    color: var(--text-deemphasis, #c3c6d6);
+    font-size: var(--font-size-base, 1rem);
+  }
+  
+  .message {
+    display: flex;
+  }
+  
+  .assistant-text, .user-text {
+    word-wrap: break-word;
+    word-break: break-word;
+    white-space: pre-wrap;
+  }
+  
+  .assistant-text {
+    color: var(--text-primary, #eef0ff);
+    margin: 0;
+    font-size: var(--font-size-base, 1rem);
+    font-weight: var(--font-weight-normal, 400);
+  }
+  
+  .user-bubble {
+    background: var(--primary);
+    border-radius: var(--border-radius);
+    padding: 0.75rem;
+    max-width: 60%;
+    margin-left: auto;
+    word-wrap: break-word;
+    word-break: break-word;
+    white-space: pre-wrap;
+  }
+  
+  .user-text {
+    color: var(--text-primary, #eef0ff);
+    margin: 0;
+    font-size: var(--font-size-base, 1rem);
+    font-weight: var(--font-weight-normal, 400);
+  }
+  
+  .thinking {
+    text-align: center;
+    color: var(--primary-variant, #4285f4);
+    font-size: var(--font-size-base, 1rem);
+    margin-top: 10px;
+    opacity: 1;
+    transition: opacity var(--transition-speed);
+  }
+  
+  .dots span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin: 0 2px;
+    background-color: var(--primary-variant, #4285f4);
+    border-radius: 50%;
+    animation: blink 1s infinite;
+  }
+  
+  @keyframes blink {
+    0% { opacity: 0.2; }
+    20% { opacity: 1; }
+    100% { opacity: 0.2; }
+  }
+  
+  .input-area-wrapper {
+    margin-top: 1rem;
+    flex-shrink: 0;
+  }
+  
+  
+  .trash-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    transition: background var(--transition-speed);
+    border-radius: 50%;
+  }
+  
+  .trash-btn:hover {
+    background: rgba(240, 240, 240, 0.1);
+  }
+  
+  input {
+    flex: 1;
+    background: var(--surface-container, #2c303d);
+    color: var(--text-primary, #eef0ff);
+    border: none;
+    font-size: var(--font-size-base, 1rem);
+    font-weight: var(--font-weight-normal, 400);
+    padding: 0.5rem 0.75rem;
+    outline: none;
+    border-radius: var(--border-radius);
+    word-wrap: break-word;
+  }
+  
+  input::placeholder {
+    color: var(--text-deemphasis, #c3c6d6);
+    opacity: 0.6;
+    font-weight: 300;
+  }
+  
+  .send-btn {
+    background: var(--primary);
+    color: var(--text-primary);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--transition-speed), transform var(--transition-speed);
+  }
+  
+  .send-btn:hover {
+    background: var(--primary-variant);
+  }
+  
+  .arrow-icon {
+    color: var(--text-primary);
+    font-size: 24px;
+    transition: transform var(--transition-speed);
+  }
+  
+  .send-btn:hover .arrow-icon {
+    transform: scale(1.05);
+  }
+  
+  .mistake-note {
+    text-align: center;
+    color: var(--text-emphasis, #eef0ff);
+    font-size: var(--font-size-base, 0.75rem);
+    font-weight: var(--font-weight-normal, 400);
+    margin-top:100px;
+  }
+  
+  /* Scrollbar Styling (opzionale) */
+  .chat-messages::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .chat-messages::-webkit-scrollbar-track {
+    background: var(--scrollbar-track, #1f1f1f);
+  }
+  
+  .chat-messages::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb-background, rgba(255,255,255,0.2));
+    border-radius: 4px;
+  }
